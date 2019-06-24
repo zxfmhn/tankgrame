@@ -1,5 +1,6 @@
 package tank;
 
+import java.awt.Color;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -45,8 +46,76 @@ public class tank extends Frame{
 			b.draw(g);
 		for(River r : rivers)
 			r.draw(g);
-	}
+		for(Wall w : walls)
+			w.draw(g);
+		for(Tank1 t : enemyTanks)
+			t.draw(g);
+		player.draw(g);
+		for(Blast b : blast)
+			b.draw(g);
 
+		checkStarEat();
+		checkEnemyBullet();
+		checkMyBullet();
+		//画出子弹与树叶
+		for(Bullet b : enemyBullet)
+			b.draw(g);
+		for(Bullet b : myBullet)
+			b.draw(g);
+		for(Tree t :trees)
+			t.draw(g);
+		//更新战场上坦克的数据
+		deadtankNumber = checkEnemyTankCollide();
+		alivetankNumber = totaltankNumber - deadtankNumber;
+		checkPlayerTankCollide(player);
+	}
+	public void update(Graphics g) 
+	{
+		screenImage = this.createImage(Constant.FRAME_WIDTH);
+		Graphics gsi =screenImage.getGraphics();
+		Color c = gsi.getColor();
+		gsi.setColor(Color.BLACK);
+		gsi.fillRect(0, 0, Constant.FRAME_WIDTH, Constant.FRAME_LENGTH);
+		gsi.setColor(c);
+		paint(gsi);
+		g.drawImage(screenImage,0,26,Constant.FRAME_WIDTH,Constant.FRAME_LENGTH,null);
+		
+		Image numberImage = this.createImage(110,310);
+		Graphics gni = numberImage.getGraphics();
+		int miniX = 0,miniY = 0;
+		for(int i = 0;i < alivetankNumber;i++)
+		{
+			gni.drawImage(Constant.MINI_TANK_IMAGE, miniX + i % 3 * 40, miniY + i / 3 *40, null);		
+		}
+		g.drawImage(numberImage, Constant.FRAME_WIDTH + 25, 450, null);	
+	 }
+	
+
+	
+	private Image createImage(int frameWidth) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	private void checkPlayerTankCollide(PlayerTank player2) {
+		// TODO Auto-generated method stub
+		
+	}
+	private int checkEnemyTankCollide() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	private void checkMyBullet() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void checkEnemyBullet() {
+		// TODO Auto-generated method stub
+		
+	}
+	private void checkStarEat() {
+		// TODO Auto-generated method stub
+		
+	}
 	private void updateNewTank() {
 		// TODO Auto-generated method stub
 		
@@ -55,8 +124,13 @@ public class tank extends Frame{
 		// TODO Auto-generated method stub
 		
 	}
+	//定义游戏界面
 	private void initWarElements() {
 		// TODO Auto-generated method stub
+		Constant.GAME_START_SOUND.play();
+		//添加游戏界面中的河
+		for(int i = 180; i<=420;i +=60)
+			rivers.add(new River(0,i));
 		
 	}
 
