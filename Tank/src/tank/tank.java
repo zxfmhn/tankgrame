@@ -127,11 +127,48 @@ public class tank extends Frame{
 	//定义游戏界面
 	private void initWarElements() {
 		// TODO Auto-generated method stub
-		Constant.GAME_START_SOUND.play();
 		//添加游戏界面中的河
-		for(int i = 180; i<=420;i +=60)
+		for(int i = 180; i<= 420;i += 60)
 			rivers.add(new River(0,i));
+		rivers.add(new River(540,600));
+		rivers.add(new River(720,600));
+		rivers.add(new River(720,600));
+		rivers.add(new River(720,600));
+		//添加墙
+		for(int i = 0;i < 2;i++)
+			for(int j = 60;j <= 210;j += 30)
+				walls.add(new Wall(j,720 + i * 30,Constant.NORMAL_WALL));
+		for(int i = 0;i < 2;i++)
+			for(int j = 120;j <= 240;j += 30)
+				walls.add(new Wall(j,480 + i * 30,Constant.NORMAL_WALL));
+		for(int i = 0;i < 2;i++)
+			for(int j = 600;j <= 690;j += 30)
+				walls.add(new Wall(0 + i * 30,j,Constant.NORMAL_WALL));
+		for(int i = 0;i < 2;i++)
+			for(int j = 540;j <= 630;j += 30)
+				walls.add(new Wall(j,720 + i * 30,Constant.NORMAL_WALL));
+		for(int i = 0;i < 2;i++)
+			for(int j = 420;j <= 510;j += 30)
+				walls.add(new Wall(j,480 + i * 120,Constant.NORMAL_WALL));
+		for(int i = 330;i <= 420;i += 30)
+			walls.add(new Wall(i,690,Constant.NORMAL_WALL));
+		for(int i = 0;i < 2;i++)
+			for(int j = 720;j <= 750;j += 30)
+				walls.add(new Wall(330 + i * 90,j,Constant.NORMAL_WALL));
+		for(int i = 570;i <= 750;i += 30)
+			walls.add(new Wall(i,210,Constant.NORMAL_WALL));
 		
+		//添加树
+		for(int i = 60;i <= 300;i += 60)
+			trees.add(new Tree(120,i));
+		for(int i = 60;i <= 300;i += 60)
+			trees.add(new Tree(180,i));
+		for(int i = 540;i <= 720;i += 60)
+			trees.add(new Tree(i,480));
+		trees.add(new Tree(600,600));
+		trees.add(new Tree(660,600));
+		for(int i = 540;i <= 660;i += 60)
+			trees.add(new Tree(i,660));	
 	}
 
 	private void initWindow() {
