@@ -1,12 +1,17 @@
 package tank;
 
-import java.awt.Graphics;
+import java.awt.Rectangle;
 
-public class Tank1 {
+import some_interfaces.Draw;
+import some_interfaces.GetRectangle;
+import some_interfaces.Move;
 
-	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
-	}
-
+/**
+ * 坦克类，基类
+ * @author KevinWen
+ *
+ */
+public abstract class Tank1 implements Draw,Move,GetRectangle
+{
+	
 }

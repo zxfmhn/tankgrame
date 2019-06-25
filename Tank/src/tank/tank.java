@@ -1,9 +1,14 @@
 package tank;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,12 +111,94 @@ public class tank extends Frame{
 	}
 	private void checkMyBullet() {
 		// TODO Auto-generated method stub
-		
+		for(Bullet b : myBullet)
+		{
+			if(!b.isLive())
+				continue;
+			
+			if(b.hitHome(home))
+			{
+				b.setLive(false);
+				home.setLive(false);
+				break;
+			}
+			else
+			{
+				for(Wall w : walls)
+				{
+					if(!w.isLive())
+						continue;
+					if(b.hitWall(w))
+					{
+						b.setLive(false);
+						if(b.getLevel() >= w.getLevel())
+							w.setLive(false);
+						break;
+					}
+				}
+				
+				if(b.isLive())
+				{
+					for(Tank1 t : enemyTanks)
+					{
+						if(!t.isLive())
+							continue;
+						if(b.hitTank(t))
+						{
+							b.setLive(false);
+							t.beHitted();
+							if(!t.isLive())
+							{
+								Constant.BLAST_SOUND.play();
+								blast.add(new Blast(t.getX(),t.getY()));
+								onBattle--;
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
 	}
+	//判断敌方子弹的射中情况
 	private void checkEnemyBullet() {
 		// TODO Auto-generated method stub
+		for(Bullet b : enemyBullet)
+		{
+		//判断子弹是否存在
+		if(!b.isLive())
+			continue;
 		
-	}
+		if(b.hitHome(home))
+		{
+			b.setLive(false);
+			home.setLive(false);
+			break;
+		}
+		else if(b.hitTank(player)) {
+			b.setLive(false);
+			player.beHitted();
+			if(!player.isLive())
+				blast.add(new Blast(player.getX(),player.getY()));
+		}
+		else
+		{
+			for(Wall w : walls)
+			{
+				if(!w.isLive())
+					continue;
+				if(b.hitWall(w))
+				{
+					b.setLive(false);
+					if(b.getLevel() >= w.getLevel())
+						w.setLive(false);
+					break;
+				}
+			}
+		}
+		}
+}
+		
 	private void checkStarEat() {
 		// TODO Auto-generated method stub
 		
@@ -172,6 +259,74 @@ public class tank extends Frame{
 	}
 
 	private void initWindow() {
+		// TODO Auto-generated method stub
+		Image introImage = this.createImage(200,Constant.FRAME_LENGTH);
+		Graphics gps = introImage.getGraphics();
+		gps.setFont(new Font("TimesRoman",Font.BOLD,15));;
+		gps.drawString("Press F1 to restart", 10, 40);
+		gps.drawString("Player:", 10, 110);
+		gps.drawString("Up: W      Down: S", 10, 140);
+		gps.drawString("Left: A    Right: D", 10, 170);
+		gps.drawString("Fire: Space", 10, 200);
+		gps.drawString("Remain Tanks:", 10, 400);
+		this.getGraphics().drawImage(introImage, 780, 30, null);
+		//关闭窗口监听器
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e)
+			{
+				System.exit(0);
+			}
+			});
+		//监听键盘
+		this.addKeyListener(new KeyAdapter()
+		{
+			public void keyPressed(KeyEvent e)
+			{
+				player.keyPressed(e);
+				clientKeyPressed(e);
+			}
+			public void keyReleased(KeyEvent e)
+			{
+				player.keyPressed(e);
+			}	
+		});
+	
+	}
+	private void checkWin(Graphics g)
+	{
+		Color c = g.getColor();
+		g.setColor(Color.RED);
+		if(deadtankNumber >= totaltankNumber && home.islive() && checkPlayeLife())
+		{
+			Font f = g.getFont();
+			g.setFont(new Font("timeRoman",Font.BOLD,60));
+			g.drawString("GrameWIN!!", 310, 300);
+			g.setFont(f);
+			clean();
+		}
+		else if(!home.islive() || !checkPlayerLife())
+		{
+			Font f = g.getFont();
+			g.setFont(new Font("TimeRoman",Font.BOLD,60));
+			g.drawString("GRAM OVER!!!", 260, 300);
+			g.setFont(f);
+			clean();
+		}
+		g.setColor(c);
+	}
+	private boolean checkPlayerLife() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	private void clean() {
+		// TODO Auto-generated method stub
+		
+	}
+	private boolean checkPlayeLife() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	protected void clientKeyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
