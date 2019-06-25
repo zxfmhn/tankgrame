@@ -3,10 +3,17 @@ package tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
-public class River {
+import some_interfaces.Draw;
+import some_interfaces.GetRectangle;
 
-	public River(int i, int i2) {
+public class River implements Draw,GetRectangle{
+	private int x = 0;
+	private int y = 0;
+
+	public River(int initX, int initY) {
 		// TODO Auto-generated constructor stub
+		x = initX;
+		y = initY;
 	}
 
 	public void draw(Graphics g) {
@@ -14,6 +21,7 @@ public class River {
 		
 	}
 
+	@Override
 	public Rectangle getRect() {
 		// TODO Auto-generated method stub
 		return null;
