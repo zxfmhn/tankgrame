@@ -124,12 +124,75 @@ public class TankClient extends Frame
 		// TODO Auto-generated method stub
 		
 	}
-	private void checkEnemyBullet() {
-		// TODO Auto-generated method stub
-		
-	}
+		private void checkEnemyBullet()
+		{
+			for(Bullet b : enemyBullet)
+			{
+				//先判断子弹是否存活
+				if(!b.isLive())
+					continue;
+				//是否集中基地
+				if(b.hitHome(home))
+				{
+					b.setLive(false);
+					home.setLive(false);
+					break;
+				}
+				//是否集中玩家1
+				else if(b.hitTank(playerOne))
+				{
+					b.setLive(false);
+					playerOne.beHitted();
+					if(!playerOne.isLive())
+						blast.add(new Blast(playerOne.getX(),playerOne.getY()));	
+				}
+				//玩家2是否存在，存在的话是否击中玩家2
+				else if(playerTwo != null && b.hitTank(playerTwo))
+				{
+					b.setLive(false);
+					playerTwo.beHitted();
+					if(!playerTwo.isLive())
+						blast.add(new Blast(playerTwo.getX(),playerTwo.getY()));
+				}
+				else
+				{
+					//是否击中墙，以及墙是否被摧毁
+					for(Wall w : walls)
+					{
+						if(!w.isLive())
+							continue;
+						if(b.hitWall(w))
+						{
+							b.setLive(false);
+							if(b.getLevel() >= w.getLevel())
+								w.setLive(false);
+							break;
+						}
+					}
+				}
+			}
+		}
+	//判断星星是否存在，是否被吃掉了
 	private void checkStarEat() {
-		// TODO Auto-generated method stub
+		if(star != null)
+		{
+			if(playerOne.eatStar(star))
+			{
+				star.setLive(false);
+			}
+			else if(playerTwo  !=null&&playerTwo.eatStar(star))
+			{
+				star.setLive(false);
+			}
+			else
+			{
+				for(Tank t : enemyTanks)
+					if(t.eatStar(star))
+						star.setLive(false);
+			}
+		}
+			
+		
 		
 	}
 	private void updateNewTank() {

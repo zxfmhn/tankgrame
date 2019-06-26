@@ -34,4 +34,9 @@ public class Home implements Draw,GetRectangle
 		return false;
 	}
 
+	public void setLive(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

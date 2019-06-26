@@ -25,4 +25,29 @@ public class PlayerOneTank {
 		
 	}
 
+	public boolean eatStar(LevelStar star) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public void beHitted() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public boolean isLive() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public int getX() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int getY() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
