@@ -122,6 +122,53 @@ public class TankClient extends Frame
 	}
 	private void checkMyBullet() {
 		// TODO Auto-generated method stub
+		for(Bullet b : myBullet)
+		{
+			if(!b.isLive())
+				continue;
+			if(b.hitHome(home))
+			{
+				b.setLive(false);
+				home.setLive(false);
+				break;
+			}
+			else
+			{
+				for(Wall w: walls)
+				{
+					if(!w.isLive())
+						continue;
+					if(b.hitWall(w))
+					{
+						b.setLive(false);
+						if(b.getLevel()>=w.getLevel())
+							w.setLive(false);
+						break;
+
+					}
+				}
+				if(b.islive())
+				{
+					for(Tank t : enemyTanks)
+					{
+						if(!t.isLive())
+							continue;
+						if(b.hitTank(t))
+						{
+							b.setLive(false);
+							t.beHitted();
+							if(!t.isLive())
+							{
+								Constant.BLAST_SOUND.play();
+								blast.add(new Blast(t.getX(),t.getY()));
+								onBattle--;
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
 		
 	}
 		private void checkEnemyBullet()
@@ -364,6 +411,7 @@ public class TankClient extends Frame
 					}
 				});
 			}
+	
 	private class PaintThread implements Runnable
 	{
 		public void run()

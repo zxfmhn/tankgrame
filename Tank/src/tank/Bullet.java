@@ -53,4 +53,9 @@ public class Bullet {
 		return false;
 	}
 
+	public boolean hitTank(Tank t) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
