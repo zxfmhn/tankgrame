@@ -118,7 +118,79 @@ public class TankClient extends Frame
 	}
 	private int checkEnemyTankCollide() {
 		// TODO Auto-generated method stub
-		return 0;
+		//摧毁坦克的计数器
+		int deadCount = 0;
+		//判断敌方坦克是否撞到某物，撞到则返回上一个位置
+			for(Tank t : enemyTanks)
+			{
+				if(!t.isLive())
+				{
+					deadCount++;
+					continue;
+				}
+			
+				if(t.isCollideHome(home))
+				{
+					home.setLive(false);
+					break;
+				}
+				else if(t.isCollideTank(playerOne) || (playerTwo != null && t.isCollideTank(playerTwo)))
+				{
+					t.runBack();
+					continue;
+				}
+				
+				boolean flag = false;
+				
+				for(Born b : born)
+				{
+					if(t.isCollideBorn(b))
+					{
+						t.runBack();
+						flag = true;
+						break;
+					}
+				}
+				if(flag)
+					continue;
+				
+				for(River r : rivers)
+				{
+					if(t.isCollideRiver(r))
+					{
+						t.runBack();
+						flag = true;
+						break;
+					}
+				}
+				if(flag)
+					continue;
+				
+				for(Wall w : walls)
+				{
+					if(t.isCollideWall(w))
+					{
+						t.runBack();
+						flag = true;
+						break;
+					}
+				}
+				if(flag)
+					continue;
+				
+				for(Tank temp : enemyTanks)
+				{
+					if(!temp.equals(t))
+					{
+						if(t.isCollideTank(temp))
+						{
+							t.runBack();
+							break;
+						}
+					}
+				}
+			}
+			return deadCount;
 	}
 	private void checkMyBullet() {
 		// TODO Auto-generated method stub
@@ -242,8 +314,38 @@ public class TankClient extends Frame
 		
 		
 	}
+	//将之前击败坦克的累移除，添加相应的坦克
 	private void updateNewTank() {
 		// TODO Auto-generated method stub
+		List<Born> done = new ArrayList<Born>();
+		for(Born b : born)
+		{
+			if(!b.isLive())
+			{
+				done.add(b);
+				//在游戏界面内随机添加坦克
+				if(bornStep % 2 ==1)
+				{
+					enemyTanks.add(new EnemyFastTank(b.getX(),0,Constant.DOWN,this,40));	
+					
+				}
+				else
+				{
+					enemyTanks.add(new EnemyNormalTank(b.getX(),0,Constant.DOWN,this,50));
+				}
+			}
+		}
+		//如果删除列表里有内容，则删除
+		if(done.size() !=0)
+			born.removeAll(done);
+		//判断是否有后续坦克入场，以及后续坦克能否入场
+				//最多同时三个入场，判断战场坦克数量，以及坦克剩余数量，并且判断入场位置是否被占用
+				if(born.size() < 3 && onBattle < maxOnBattle && aliveTankNumber - onBattle > 0 && bornCollideSomething())
+				{
+					Constant.ADD_SOUND.play();
+					onBattle++;
+					born.add(new Born(Constant.BORN_POSITION_X[bornStep % 3]));
+				}
 		
 	}
 	private void checkWin(Graphics g) 
@@ -277,6 +379,10 @@ public class TankClient extends Frame
 	}
 	private void clean() {
 		// TODO Auto-generated method stub
+		blast.clear();
+		enemyBullet.clear();
+		myBullet.clear();
+		star = null;
 		
 	}
 	//初始化游戏界面
@@ -411,6 +517,53 @@ public class TankClient extends Frame
 					}
 				});
 			}
+	protected void clientKeyPressed(KeyEvent e)
+	{
+		//F1重新开始游戏，F2添加玩家2
+				if(e.getKeyCode() == KeyEvent.VK_F1)
+				{
+					playerTwo = null;
+					aliveTankNumber = totalTankNumber;
+					deadTankNumber = 0;
+					bornStep = 0;
+					onBattle = 0;
+					enemyTanks.clear();
+					blast.clear();
+					enemyBullet.clear();
+					myBullet.clear();
+					walls.clear();
+					trees.clear();
+					rivers.clear();
+					born.clear();
+					playerOne = new PlayerOneTank(270,720,Constant.STOP,this,5,Constant.PLAYER_ONE);
+					star = new LevelStar(200,120);
+					home.setLive(true);
+					initWarElements();
+				}
+				else if(e.getKeyCode() == KeyEvent.VK_F2)
+					playerTwo = new PlayerTwoTank(450,720,Constant.STOP,this,5,Constant.PLAYER_TWO);
+		}
+	//判断入场类的入场位置是否被占用
+		private boolean bornCollideSomething()
+		{
+			bornStep++;
+			int step = bornStep % 3;
+			//判断是否被其他入场类占用
+			for(Born b : born)
+				if(b.getX() == Constant.BORN_POSITION_X[step])
+					return false;
+			
+			Born test = new Born(Constant.BORN_POSITION_X[step]);
+			
+			//判断是否有坦克占用当前位置
+			for(Tank t : enemyTanks)
+				if(t.isCollideBorn(test))
+					return false;
+			if(playerOne.isCollideBorn(test))
+				return false;
+			
+			return true;
+		}
 	
 	private class PaintThread implements Runnable
 	{

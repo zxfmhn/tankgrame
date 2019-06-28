@@ -250,4 +250,14 @@ public abstract class Tank implements Draw,Move,GetRectangle
 	{
 		return y;
 	}
+
+	public boolean isCollideTank(PlayerOneTank playerOne) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean isCollideTank(PlayerTwoTank playerTwo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

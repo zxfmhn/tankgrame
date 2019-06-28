@@ -50,4 +50,9 @@ public class PlayerOneTank {
 		return 0;
 	}
 
+	public boolean isCollideBorn(Born test) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

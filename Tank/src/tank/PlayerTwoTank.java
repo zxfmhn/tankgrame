@@ -6,6 +6,10 @@ import java.awt.event.KeyEvent;
 
 public class PlayerTwoTank {
 
+	public PlayerTwoTank(int i, int j, int stop, TankClient tankClient, int k, int playerTwo) {
+		// TODO Auto-generated constructor stub
+	}
+
 	public void draw(Graphics g) {
 		// TODO Auto-generated method stub
 		
