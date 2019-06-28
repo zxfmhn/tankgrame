@@ -2,31 +2,76 @@ package tank;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Comparator;
 
-public class Born {
+import some_interfaces.Draw;
+import some_interfaces.GetRectangle;
 
-	public Born(int i) {
-		// TODO Auto-generated constructor stub
+/**
+ * 入场类，坦克出现时有星光闪烁；坦克只能在界面最顶部三个位置随机出现
+ * @author KevinWen
+ *
+ */
+public class Born implements Comparator<Born>,Draw,GetRectangle
+{
+	//闪烁步骤，一共4步
+	private int step = 0;
+	//闪烁类的横坐标，纵坐标默认为零
+	private int x;
+	//判断对象是否存活
+	private boolean live = true;
+	
+	/**
+	 * 构造函数，传入入场位置的横坐标
+	 * @param initX
+	 */
+	public Born(int initX)
+	{
+		x = initX;
+	}
+	
+	public void draw(Graphics g)
+	{
+		if(step == Constant.BORN_IMAGES.length)
+		{
+			live = false;
+		}
+		if(live)
+		{
+			g.drawImage(Constant.BORN_IMAGES[step++],x,0,null);
+		}
+	}
+	
+	public int getX()
+	{
+		return x;
 	}
 
-	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		
+	public boolean isLive()
+	{
+		return live;
 	}
 
-	public Rectangle getRect() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setLive(boolean live)
+	{
+		this.live = live;
 	}
-
-	public boolean isLive() {
-		// TODO Auto-generated method stub
-		return false;
+	
+	/**
+	 * 获得矩形信息
+	 * @return 返回入场对象的矩形
+	 */
+	public Rectangle getRect()
+	{
+		return new Rectangle(x,0,Constant.MY_TANK_WIDTH,Constant.MY_TANK_LENGTH);
 	}
-
-	public Object getX() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	/**
+	 * 用于ArrayList的比较
+	 * @return 0为相等
+	 */
+	public int compare(Born left, Born right)
+	{
+		return left.hashCode() - right.hashCode();
 	}
-
 }
