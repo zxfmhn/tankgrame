@@ -97,8 +97,7 @@ public class TankClient extends Frame
 		deadTankNumber = checkEnemyTankCollide();
 		aliveTankNumber = totalTankNumber - deadTankNumber;
 		
-		checkPlayerTankCollide(playerOne);
-		checkPlayerTankCollide(playerTwo);
+		
 	}
 
 	//界面更新函数，每一次更新界面都会调用此函数
