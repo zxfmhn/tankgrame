@@ -146,4 +146,14 @@ public class Bullet implements Draw,Move,GetRectangle
 	{
 		return level;
 	}
+
+	public boolean hitTank(PlayerOneTank playerOne) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean hitTank(PlayerTwoTank playerTwo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
