@@ -12,31 +12,37 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 主窗体类，游戏界面
+ * @author KevinWen
+ *
+ */
 public class TankClient extends Frame
 {
 	private static final long serialVersionUID = 1L;
-	private int totalTankNumber;
-	private int aliveTankNumber;
-	private int deadTankNumber = 0;
-	private int maxOnBattle = 0;
-	private int onBattle = 0;//界面内的坦克计数器
-	private int bornStep = 0;//界面内新出现的坦克计数器
+	private int totalTankNumber; //坦克总数
+	private int aliveTankNumber; //存活坦克数
+	private int deadTankNumber  = 0; //已摧毁坦克数
+	private int maxOnBattle = 6; //战场上坦克上线
+	private int onBattle = 0;//战场坦克计数器
+	private int bornStep = 0;//新出现坦克计数器
 	
-	private Image screenImage = null;//画游戏界面内的游戏元素
+	private Image screenImage = null;//画游戏界面元素
+	
 	private PlayerOneTank playerOne = new PlayerOneTank(270,720,Constant.STOP,this,5,Constant.PLAYER_ONE);//玩家1
-	private PlayerTwoTank playerTwo = null;
-	private Home home = new Home(360,720);//老家
-	private LevelStar star = new LevelStar(200,90);//升级星星
+	private PlayerTwoTank playerTwo = null;//玩家2
+	private Home home = new Home(360,720);//基地
+	private LevelStar star = new LevelStar(200,90);//等级星
 	
 	protected List<Tank> enemyTanks = new ArrayList<Tank>();//敌方坦克
-	private List<Wall> walls = new ArrayList<Wall>();//墙
+	private List<Wall> walls = new ArrayList<Wall>(); //墙
 	private List<River> rivers = new ArrayList<River>();//河
 	private List<Tree> trees = new ArrayList<Tree>();//树
 	private List<Blast> blast = new ArrayList<Blast>();	//爆炸类
 	private List<Born> born = new ArrayList<Born>();//入场类，上限为3
 	protected List<Bullet> enemyBullet = new ArrayList<Bullet>();//敌方子弹
 	protected List<Bullet> myBullet = new ArrayList<Bullet>();//我方子弹
-	 
+	
 	/**
 	 * 主窗体类构造函数
 	 * @param total 敌方坦克总数，最多20个,最少1个，如果total小于等于0，自动初始化为3
@@ -97,7 +103,8 @@ public class TankClient extends Frame
 		deadTankNumber = checkEnemyTankCollide();
 		aliveTankNumber = totalTankNumber - deadTankNumber;
 		
-		
+		checkPlayerTankCollide(playerOne);
+		checkPlayerTankCollide(playerTwo);
 	}
 
 	//界面更新函数，每一次更新界面都会调用此函数
@@ -676,4 +683,4 @@ public class TankClient extends Frame
 			}
 		}	
 	}
-}	
+}
