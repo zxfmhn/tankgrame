@@ -12,7 +12,7 @@ import some_interfaces.GetRectangle;
  * @author KevinWen
  *
  */
-public class LevelStar implements Draw,GetRectangle
+public class LeveIStar implements Draw,GetRectangle
 {
 	private int x = 0;
 	private int y = 0;
@@ -33,7 +33,7 @@ public class LevelStar implements Draw,GetRectangle
 	 * @param initAppearInterval 产生间隔
 	 * @param initAppearTime 停留时间
 	 */
-	public LevelStar(int initAppearInterval,int initAppearTime)
+	public LeveIStar(int initAppearInterval,int initAppearTime)
 	{
 		appearInterval = initAppearInterval;
 		appearTime = initAppearTime;
