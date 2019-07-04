@@ -21,7 +21,9 @@ public class Wall implements Draw,GetRectangle
 	 */
 	public Wall(int initX,int initY,int initLevel)
 	{
-		
+		x = initX;
+		y = initY;
+		level = initLevel;
 	}
 	
 	public int getLevel()
