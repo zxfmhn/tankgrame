@@ -23,7 +23,7 @@ public class LeveIStar implements Draw,GetRectangle
 	private static Random rand = new Random();
 	//产生间隔
 	private int appearInterval;
-	//停留时间
+	//停留时间s
 	private int appearTime;
 	//计时器
 	private int appearStep = 0;

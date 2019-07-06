@@ -128,4 +128,9 @@ public class PlayerTwoTank extends Tank
 		else
 			direction = Constant.STOP;
 	}
+
+	public boolean eatStar(LeveIStar star) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

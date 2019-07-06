@@ -74,7 +74,7 @@ public abstract class Tank implements Draw,Move,GetRectangle
 	 * @param s 等级星
 	 * @return 吃掉等级星则返回true，否则返回false
 	 */
-	public boolean eatStar(LevelStar s)
+	public boolean eatStar(LeveIStar s)
 	{
 		//坦克是否存活，等级星是否存活，坦克是否碰到等级星
 		if(live >= 0 && s.isLive() && this.getRect().intersects(s.getRect()))
@@ -257,6 +257,11 @@ public abstract class Tank implements Draw,Move,GetRectangle
 	}
 
 	public boolean isCollideTank(PlayerTwoTank playerTwo) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean eatStar1(LeveIStar star) {
 		// TODO Auto-generated method stub
 		return false;
 	}

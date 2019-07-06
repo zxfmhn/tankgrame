@@ -96,7 +96,7 @@ public class Constant
 	static
 	{
 		HOME_IMAGE = tk.getImage(Home.class.getClassLoader().getResource("TankWarImages/home.gif"));
-		STAR_IMAGE = tk.getImage(LevelStar.class.getClassLoader().getResource("TankWarImages/levelStar.gif"));
+		STAR_IMAGE = tk.getImage(LeveIStar.class.getClassLoader().getResource("TankWarImages/levelStar.gif"));
 		RIVER_IMAGE = tk.getImage(River.class.getClassLoader().getResource("TankWarImages/river.gif"));
 		TREE_IMAGE = tk.getImage(Tree.class.getClassLoader().getResource("TankWarImages/tree.gif"));
 		MINI_TANK_IMAGE = tk.getImage(Home.class.getClassLoader().getResource("TankWarImages/miniTank.gif"));

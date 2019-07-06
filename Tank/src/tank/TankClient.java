@@ -32,7 +32,7 @@ public class TankClient extends Frame
 	private PlayerOneTank playerOne = new PlayerOneTank(270,720,Constant.STOP,this,5,Constant.PLAYER_ONE);//玩家1
 	private PlayerTwoTank playerTwo = null;//玩家2
 	private Home home = new Home(360,720);//基地
-	private LevelStar star = new LevelStar(200,90);//等级星
+	private LeveIStar star = new LeveIStar(200,90);//等级星
 	
 	protected List<Tank> enemyTanks = new ArrayList<Tank>();//敌方坦克
 	private List<Wall> walls = new ArrayList<Wall>(); //墙
@@ -208,7 +208,7 @@ public class TankClient extends Frame
 		this.setSize(Constant.FRAME_WIDTH + 200,Constant.FRAME_LENGTH + 30);
 		this.setLocation(280,50);
 		this.setResizable(false);
-		this.setTitle("Kevin's Tank War");
+		this.setTitle("Tank War");
 		this.setBackground(Color.GRAY);
 		this.setVisible(true);
 		
@@ -552,7 +552,7 @@ public class TankClient extends Frame
 			rivers.clear();
 			born.clear();
 			playerOne = new PlayerOneTank(270,720,Constant.STOP,this,5,Constant.PLAYER_ONE);
-			star = new LevelStar(200,120);
+			star = new LeveIStar(200,120);
 			home.setLive(true);
 			initWarElements();
 		}
